@@ -186,7 +186,25 @@ class ChessPiece {
       break;
       
       case 'P': // White Pawn
-        
+        if(From >= 48 && From < 56){
+          if(To-From == -16 || To-From == -8){
+          IsitLegal = true;
+        }
+                
+          else{
+            return false;
+            }
+          }
+
+      if(To == 'R' ||To =='N'||To == 'B'||To =='Q'||To =='K'||To == 'P'){
+        return false;
+      }
+      if((To-From == -7||To-From == -9) && (To == 'p'||To =='q'||To =='b'||To == 'n'||To == 'r')){
+        IsitLegal = true;
+      }
+      if(To < 0){
+        return false;
+      }
       break;
            
       case 'R': //White Rook
