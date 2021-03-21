@@ -144,25 +144,29 @@ class ChessPiece {
     byte PlayersPiece = BitBoard[From];
     switch(PlayersPiece){
       case 'p':
-      if(From >= 8 && From < 16){
+      if(From >= 8 && From < 16){ //Condition for testing if the pawn is on the 2nd rank and can move two squares
         if(To-From == 16 || To-From == 8){
           IsitLegal = true;
         }
+      }
                 
-      else{
-        return false;
+      else if(To-From == 8){ //Condition for testing if the pawn is moving one square
+        IsitLegal = true;
             }
-          }
-
-      if(To == 'r' ||To =='n'||To == 'b'||To =='q'||To =='k'||To == 'p'){
+          
+      if(BitBoard[To] == 'r' ||BitBoard[To] =='n'||BitBoard[To] == 'b'||BitBoard[To] =='q'||BitBoard[To] =='k'||BitBoard[To] == 'p'){ // Condition to test if the pawn is trying to move to a square occupied by a friendly piece
         return false;
       }
-      if((To-From == 7||To-From == 9) && (To == 'P'||To =='Q'||To =='B'||To == 'N'||To == 'R')){
+      if((To-From == 7||To-From == 9) && (BitBoard[To] == 'P'||BitBoard[To] =='Q'||BitBoard[To] =='B'||BitBoard[To] == 'N'||BitBoard[To] == 'R')){ // Condition to test if the pawn is making a capture
         IsitLegal = true;
       }
-      if(To > 63){
+        else{
         return false;
       }
+      if(To > 63|| To < 0){ //returns false if move is off the board
+        return false;
+        }
+      
       break;
       
       case 'r': //Black Rook
@@ -170,10 +174,27 @@ class ChessPiece {
       break;
             
       case 'n': //Black Knight
+       if(To-From == 17 ||To-From == 15 ||To-From == 10 ||To-From == 8 ||To-From == -8 ||To-From ==-10 ||To-From == -15||To-From == -17){ //Tests to make sure a knight is moved to a square that is available to it 
+         IsitLegal = true;
+       }
+       else{ // returns false if the knight is not moved to a legal square 
+         return false;
+       }
+       if(BitBoard[To] == 'r' ||BitBoard[To] =='n'||BitBoard[To] == 'b'||BitBoard[To] =='q'||BitBoard[To] =='k'||BitBoard[To] == 'p'){ // Condition to test if the knight is trying to move to a square occupied by a friendly piece
+        return false;
+      }
+      if(BitBoard[To] == 'P'||BitBoard[To] =='Q'||BitBoard[To] =='B'||BitBoard[To] == 'N'||BitBoard[To] == 'R'){ //Condition to allow a knight to capture if it is trying to move to a square
+        IsitLegal = true;
+      }
+      if(To > 63 ||To < 0){ //Returns false if the knight is moved off the board
+        return false;
+      }
+       
        
       break;      
       
       case 'b': //Black Bishop
+      
        
       break;
       
@@ -186,25 +207,29 @@ class ChessPiece {
       break;
       
       case 'P': // White Pawn
-        if(From >= 48 && From < 56){
+        if(From >= 48 && From < 56){//Condition for testing if the pawn is on the 2nd rank and can move two squares
           if(To-From == -16 || To-From == -8){
           IsitLegal = true;
+          }
         }
                 
-          else{
-            return false;
+     else if(To-From == -8){ //Condition for testing if the pawn is moving one square
+        IsitLegal = true;
             }
-          }
 
-      if(To == 'R' ||To =='N'||To == 'B'||To =='Q'||To =='K'||To == 'P'){
+      if(BitBoard[To] == 'R' ||BitBoard[To] =='N'||BitBoard[To] == 'B'||BitBoard[To] =='Q'||BitBoard[To] =='K'||BitBoard[To] == 'P'){ // Condition to test if the pawn is trying to move to a square occupied by a friendly piece
         return false;
       }
-      if((To-From == -7||To-From == -9) && (To == 'p'||To =='q'||To =='b'||To == 'n'||To == 'r')){
+      if((To-From == -7||To-From == -9) && (BitBoard[To] == 'p'||BitBoard[To] =='q'||BitBoard[To] =='b'||BitBoard[To] == 'n'||BitBoard[To] == 'r')){ // Condition to test if the pawn is making a capture
         IsitLegal = true;
       }
-      if(To < 0){
+      else{
         return false;
       }
+      if(To < 0|| To > 63){ //returns false if move is off the board
+        return false;
+      }
+
       break;
            
       case 'R': //White Rook
@@ -212,6 +237,21 @@ class ChessPiece {
       break;     
       
       case 'N': //White Knight
+             if(To-From == 17 ||To-From == 15 ||To-From == 10 ||To-From == 8 ||To-From == -8 ||To-From ==-10 ||To-From == -15||To-From == -17){ //Tests to make sure a knight is moved to a square that is available to it 
+         IsitLegal = true;
+       }
+       else{ // returns false if the knight is not moved to a legal square 
+         return false;
+       }
+       if(BitBoard[To] == 'r' ||BitBoard[To] =='n'||BitBoard[To] == 'b'||BitBoard[To] =='q'||BitBoard[To] =='k'||BitBoard[To] == 'p'){ // Condition to test if the knight is trying to move to a square occupied by a friendly piece
+         IsitLegal = true;
+      }
+      if(BitBoard[To] == 'P'||BitBoard[To] =='Q'||BitBoard[To] =='B'||BitBoard[To] == 'N'||BitBoard[To] == 'R'){ //Condition to allow a knight to capture if it is trying to move to a square
+       return false;
+      }
+      if(To > 63 ||To < 0){ //Returns false if the knight is moved off the board
+        return false;
+      }
         
       break;      
       
